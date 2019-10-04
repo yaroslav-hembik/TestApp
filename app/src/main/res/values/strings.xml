@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PrimaTest</string>
+    <string name="countries_list">List of countries</string>
+    <string name="country_code">CODE</string>
+    <string name="country_name">Country Name</string>
+    <string name="country_logo">Country logo</string>
 </resources>
