@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="country" type="it.hembik.primatest.CountriesQuery.Country"/>
+        <variable name="callback" type="it.hembik.primatest.view.callback.CountryClickCallback"/>
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/large"
+        android:paddingEnd="@dimen/large"
+        android:onClick="@{() ->  callback.onClick(country)}">
 
         <ImageView
             android:id="@+id/country_logo"
@@ -11,29 +19,31 @@
             android:layout_height="40dp"
             android:contentDescription="@string/country_logo"
             android:scaleType="center"
+            android:layout_margin="@dimen/medium"
+            app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/country_code"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <TextView
-            android:id="@+id/country_code"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/country_code"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/country_logo"
             app:layout_constraintEnd_toStartOf="@id/country_name"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/separator"/>
 
         <TextView
             android:id="@+id/country_name"
+            style="@style/Text_Style.Large.Black"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/country_name"
-            app:layout_constraintStart_toEndOf="@id/country_code"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/country_logo"
+            app:layout_constraintTop_toTopOf="@id/country_logo"
+            app:layout_constraintBottom_toBottomOf="@id/country_logo"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_grey"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

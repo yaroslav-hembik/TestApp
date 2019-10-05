@@ -2,18 +2,26 @@ query Countries {
   countries {
     code
     name
-    native
-    phone
-    currency
-    emoji
     continent {
-      code
       name
     }
     languages {
-      code
       name
-      native
+    }
+  }
+}
+
+query CountryDetail($code: String) {
+  country(code: $code) {
+    code
+    name
+    native
+    currency
+    continent {
+      name
+    }
+    languages {
+      name
     }
   }
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Text_Style" parent="TextAppearance.AppCompat.Medium" />
+
+    <!-- LARGE -->
+    <style name="Text_Style.Large">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+    <style name="Text_Style.Large.Black">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- EXTRA LARGE -->
+    <style name="Text_Style.ExtraLarge">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_extra_large</item>
+    </style>
+
+    <style name="Text_Style.ExtraLarge.Black">
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>

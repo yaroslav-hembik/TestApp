@@ -30,11 +30,9 @@ class MainActivity : AppCompatActivity() {
 
             supportFragmentManager
                 .beginTransaction()
-                .addToBackStack("country")
-                .replace(
-                    R.id.fragment_container,
-                    countryFragment, null
-                ).commit()
+                .addToBackStack(CountryDetailFragment.TAG)
+                .replace(R.id.fragment_container, countryFragment, null)
+                .commit()
         }
     }
 }

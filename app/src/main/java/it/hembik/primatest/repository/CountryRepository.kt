@@ -1,13 +1,13 @@
 package it.hembik.primatest.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import it.hembik.primatest.CountriesQuery
+import it.hembik.primatest.CountryDetailQuery
 import okhttp3.OkHttpClient
 
 class CountryRepository {
@@ -18,17 +18,9 @@ class CountryRepository {
         return apolloClient
     }
 
-    fun getCountries(): LiveData<CountriesQuery.Data> {
+    fun getCountries(): MutableLiveData<CountriesQuery.Data> {
         val data = MutableLiveData<CountriesQuery.Data>()
-
-        // TODO: REFACTOR
-        val okHttpClient = OkHttpClient.Builder().build()
-
-        apolloClient = ApolloClient.builder()
-            .serverUrl(BASE_URL)
-            .okHttpClient(okHttpClient)
-            .build()
-
+        setupClient()
         apolloClient()?.query(
             CountriesQuery.builder()
                 .build()
@@ -43,5 +35,33 @@ class CountryRepository {
 
         })
         return data
+    }
+
+    fun getCountryDetail(code: String?): MutableLiveData<CountryDetailQuery.Data> {
+        val data = MutableLiveData<CountryDetailQuery.Data>()
+        setupClient() // TODO: REFACTOR
+        apolloClient()?.query(
+            CountryDetailQuery.builder().code(code)
+                .build()
+        )?.enqueue(object: ApolloCall.Callback<CountryDetailQuery.Data>() {
+            override fun onFailure(e: ApolloException) {
+                Log.d("TEST", "ERROR")
+            }
+
+            override fun onResponse(response: Response<CountryDetailQuery.Data>) {
+                data.postValue(response.data())
+            }
+
+        })
+        return data
+    }
+
+    private fun setupClient() {
+        val okHttpClient = OkHttpClient.Builder().build()
+
+        apolloClient = ApolloClient.builder()
+            .serverUrl(BASE_URL)
+            .okHttpClient(okHttpClient)
+            .build()
     }
 }

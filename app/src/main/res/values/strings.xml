@@ -4,4 +4,5 @@
     <string name="country_code">CODE</string>
     <string name="country_name">Country Name</string>
     <string name="country_logo">Country logo</string>
+    <string name="name_search_hint">Continent or language</string>
 </resources>
