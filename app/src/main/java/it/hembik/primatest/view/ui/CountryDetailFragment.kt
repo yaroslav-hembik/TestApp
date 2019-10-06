@@ -1,19 +1,20 @@
 package it.hembik.primatest.view.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.apollographql.apollo.exception.ApolloNetworkException
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import it.hembik.primatest.CountryDetailQuery
 import it.hembik.primatest.R
 import it.hembik.primatest.databinding.FragmentCountryDetailBinding
+import it.hembik.primatest.repository.models.CountryDetailRepoModel
 import it.hembik.primatest.viewmodel.CountryDetailViewModel
 
 class CountryDetailFragment: Fragment() {
@@ -54,6 +55,7 @@ class CountryDetailFragment: Fragment() {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.countryLogo)
                 binding.countryViewModel = viewModel
+                binding.isLoading = true
                 observeViewModel(viewModel)
             }
 
@@ -63,11 +65,17 @@ class CountryDetailFragment: Fragment() {
     private fun observeViewModel(viewModel: CountryDetailViewModel) {
         // Update the list when the data changes
         viewModel.getCountryDetailObservable().observe(this,
-            Observer<CountryDetailQuery.Data> { country ->
-                country.country()?.let {
-                    viewModel.setCountryObservable(it)
+            Observer<CountryDetailRepoModel> { countryModel ->
+                countryModel.throwable?.let {
+                    if (it.cause is ApolloNetworkException) {
+                        Toast.makeText(context, getString(R.string.check_connection), Toast.LENGTH_LONG).show()
+                    }
+                } ?: run {
+                    countryModel.countryData?.country()?.let {
+                        viewModel.setCountryObservable(it)
+                    }
                 }
-                Log.i(TAG, "Ok")
+                binding.isLoading = false
             })
     }
 }

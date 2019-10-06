@@ -8,12 +8,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import it.hembik.primatest.CountryDetailQuery
 import it.hembik.primatest.repository.CountryRepository
+import it.hembik.primatest.repository.models.CountryDetailRepoModel
 
 class CountryDetailViewModel(application: Application, countryCode: String?): AndroidViewModel(application) {
-    private val countryObservable: MutableLiveData<CountryDetailQuery.Data> = CountryRepository().getCountryDetail(countryCode)
+    private val countryObservable: MutableLiveData<CountryDetailRepoModel> = CountryRepository().getCountryDetail(countryCode)
     var country: ObservableField<CountryDetailQuery.Country> = ObservableField()
 
-    fun getCountryDetailObservable(): MutableLiveData<CountryDetailQuery.Data> {
+    fun getCountryDetailObservable(): MutableLiveData<CountryDetailRepoModel> {
         return countryObservable
     }
 

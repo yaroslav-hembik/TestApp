@@ -6,4 +6,5 @@
     <color name="white">#FFFFFF</color>
     <color name="light_grey">#D3D3D3</color>
     <color name="black">#000000</color>
+    <color name="loader_background">#33000000</color>
 </resources>

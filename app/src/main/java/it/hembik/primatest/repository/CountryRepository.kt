@@ -1,13 +1,15 @@
 package it.hembik.primatest.repository
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
+import com.apollographql.apollo.exception.ApolloNetworkException
 import it.hembik.primatest.CountriesQuery
 import it.hembik.primatest.CountryDetailQuery
+import it.hembik.primatest.repository.models.CountriesRepoModel
+import it.hembik.primatest.repository.models.CountryDetailRepoModel
 import okhttp3.OkHttpClient
 
 class CountryRepository {
@@ -18,40 +20,46 @@ class CountryRepository {
         return apolloClient
     }
 
-    fun getCountries(): MutableLiveData<CountriesQuery.Data> {
-        val data = MutableLiveData<CountriesQuery.Data>()
+    fun getCountries(): MutableLiveData<CountriesRepoModel> {
+        val data = MutableLiveData<CountriesRepoModel>()
         setupClient()
         apolloClient()?.query(
             CountriesQuery.builder()
                 .build()
         )?.enqueue(object: ApolloCall.Callback<CountriesQuery.Data>() {
             override fun onFailure(e: ApolloException) {
-                Log.d("TEST", "ERROR")
+                data.postValue(CountriesRepoModel(throwable = Throwable(e)))
             }
 
             override fun onResponse(response: Response<CountriesQuery.Data>) {
-                data.postValue(response.data())
+                data.postValue(CountriesRepoModel(countriesData = response.data()))
             }
 
+            override fun onNetworkError(e: ApolloNetworkException) {
+                data.postValue(CountriesRepoModel(throwable = Throwable(e)))
+            }
         })
         return data
     }
 
-    fun getCountryDetail(code: String?): MutableLiveData<CountryDetailQuery.Data> {
-        val data = MutableLiveData<CountryDetailQuery.Data>()
-        setupClient() // TODO: REFACTOR
+    fun getCountryDetail(code: String?): MutableLiveData<CountryDetailRepoModel> {
+        val data = MutableLiveData<CountryDetailRepoModel>()
+        setupClient()
         apolloClient()?.query(
             CountryDetailQuery.builder().code(code)
                 .build()
         )?.enqueue(object: ApolloCall.Callback<CountryDetailQuery.Data>() {
             override fun onFailure(e: ApolloException) {
-                Log.d("TEST", "ERROR")
+                data.postValue(CountryDetailRepoModel(throwable = Throwable(e)))
             }
 
             override fun onResponse(response: Response<CountryDetailQuery.Data>) {
-                data.postValue(response.data())
+                data.postValue(CountryDetailRepoModel(countryData = response.data()))
             }
 
+            override fun onNetworkError(e: ApolloNetworkException) {
+                data.postValue(CountryDetailRepoModel(throwable = Throwable(e)))
+            }
         })
         return data
     }

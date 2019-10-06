@@ -3,13 +3,26 @@ package it.hembik.primatest.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import it.hembik.primatest.CountriesQuery
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import it.hembik.primatest.repository.CountryRepository
+import it.hembik.primatest.repository.models.CountriesRepoModel
 
 class CountriesViewModel(application: Application): AndroidViewModel(application) {
-    private val countriesObservable: LiveData<CountriesQuery.Data> = CountryRepository().getCountries()
+    private val reloadTrigger = MutableLiveData<Boolean>()
+    private val countriesObservable: LiveData<CountriesRepoModel> = Transformations.switchMap(reloadTrigger) {
+        CountryRepository().getCountries()
+    }
 
-    fun getCountriesObservable(): LiveData<CountriesQuery.Data> {
+    init {
+        refreshUsers()
+    }
+
+    fun getCountriesObservable(): LiveData<CountriesRepoModel> {
         return countriesObservable
+    }
+
+    fun refreshUsers() {
+        reloadTrigger.value = true
     }
 }

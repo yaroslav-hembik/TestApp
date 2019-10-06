@@ -5,4 +5,10 @@
     <string name="country_name">Country Name</string>
     <string name="country_logo">Country logo</string>
     <string name="name_search_hint">Continent or language</string>
+    <string name="continent_label">Continent:</string>
+    <string name="languages_label">Languages:</string>
+    <string name="country_code_label">Country code:</string>
+    <string name="native_label">Native:</string>
+    <string name="currency_label">Currency</string>
+    <string name="check_connection">Check your internet connection</string>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable name="isLoading" type="boolean" />
         <variable name="countryViewModel" type="it.hembik.primatest.viewmodel.CountryDetailViewModel"/>
@@ -10,28 +11,161 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
-        <TextView
-            style="@style/Text_Style.ExtraLarge.Black"
-            android:id="@+id/country_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@{countryViewModel.country.name()}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
 
         <ImageView
             android:id="@+id/country_logo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/country_logo"
-            android:layout_margin="@dimen/medium"
+            android:src="@drawable/flag_placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/country_name"
+            app:layout_constraintStart_toStartOf="@id/country_details_table"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/country_name"
+            style="@style/Text_Style.ExtraLarge.Black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/large"
+            android:text="@{countryViewModel.country.name}"
+            android:maxLines="2"
+            app:layout_constraintBottom_toBottomOf="@id/country_logo"
+            app:layout_constraintEnd_toEndOf="@id/country_details_table"
+            app:layout_constraintStart_toEndOf="@id/country_logo"
+            app:layout_constraintTop_toTopOf="@id/country_logo" />
+
+        <TableLayout
+            android:id="@+id/country_details_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/country_logo"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/code_label"
+                    style="@style/Text_Style.Large.Bold.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/country_code_label" />
+
+                <TextView
+                    android:id="@+id/code_value"
+                    style="@style/Text_Style.Large.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large"
+                    android:text="@{countryViewModel.country.code}" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/native_label"
+                    style="@style/Text_Style.Large.Bold.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/native_label" />
+
+                <TextView
+                    android:id="@+id/native_value"
+                    style="@style/Text_Style.Large.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large"
+                    android:text="@{countryViewModel.country.native_}" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/currency_label"
+                    style="@style/Text_Style.Large.Bold.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/currency_label" />
+
+                <TextView
+                    android:id="@+id/currency_value"
+                    style="@style/Text_Style.Large.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large"
+                    app:currency="@{countryViewModel.country.currency}"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/continent_label"
+                    style="@style/Text_Style.Large.Bold.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/continent_label" />
+
+                <TextView
+                    android:id="@+id/continent_value"
+                    style="@style/Text_Style.Large.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large"
+                    android:text="@{countryViewModel.country.continent.name}" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/languages_label"
+                    style="@style/Text_Style.Large.Bold.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/languages_label" />
+
+                <TextView
+                    android:id="@+id/languages_value"
+                    style="@style/Text_Style.Large.Black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large"
+                    app:languages="@{countryViewModel.country.languages}" />
+            </TableRow>
+        </TableLayout>
+
+        <FrameLayout
+            android:id="@+id/loader_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/loader_background"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
+            app:visibleGone="@{isLoading}"
+            tools:visibility="gone">
+            <ProgressBar
+                android:id="@+id/loader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/colorPrimaryDark" />
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

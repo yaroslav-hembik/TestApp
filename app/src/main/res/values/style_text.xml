@@ -9,7 +9,17 @@
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
+    <style name="Text_Style.Large.Bold">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
     <style name="Text_Style.Large.Black">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Text_Style.Large.Bold.Black">
         <item name="android:textColor">@color/black</item>
     </style>
 

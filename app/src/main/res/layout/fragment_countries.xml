@@ -2,6 +2,9 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="dataAvailable" type="boolean" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,21 +21,37 @@
             android:iconifiedByDefault="false"
             android:imeOptions="flagNoExtractUi"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/countries_list"
+            app:layout_constraintBottom_toTopOf="@id/swipe_to_refresh"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/countries_list"
-            android:contentDescription="@string/countries_list"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_to_refresh"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/white"
-            app:layoutManager="LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/search_field"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/countries_list"
+                android:contentDescription="@string/countries_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                app:layoutManager="LinearLayoutManager"
+                app:visibleGone="@{dataAvailable}"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        <TextView
+            android:id="@+id/no_data_available"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No data available, pull to refresh."
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:visibleGone="@{!dataAvailable}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
