@@ -18,8 +18,8 @@ import it.hembik.primatest.view.callback.CountryClickCallback
 class CountriesAdapter(private val countryClickCallback: CountryClickCallback): RecyclerView.Adapter<CountriesAdapter.CountryViewHolder>(), Filterable {
     private val IMAGE_HOST = "https://www.countryflags.io/"
     private val IMAGE_LOCATION = "/shiny/64.png"
-    var countriesList: CountriesQuery.Data? = null
-    var filteredCountriesList: CountriesQuery.Data? = null
+    private var countriesList: CountriesQuery.Data? = null
+    private var filteredCountriesList: CountriesQuery.Data? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

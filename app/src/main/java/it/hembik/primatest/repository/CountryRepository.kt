@@ -16,14 +16,24 @@ class CountryRepository {
     private val BASE_URL = "https://countries.trevorblades.com/"
     private var apolloClient: ApolloClient? = null
 
-    private fun apolloClient(): ApolloClient? {
-        return apolloClient
+    /**
+     * Apollo client getter. Makes setup if null.
+     */
+    private fun getApolloClient(): ApolloClient {
+        return apolloClient?.let {
+            it
+        } ?: run {
+            setupClient()
+        }
     }
 
+    /**
+     * Gets list of countries.
+     */
     fun getCountries(): MutableLiveData<CountriesRepoModel> {
         val data = MutableLiveData<CountriesRepoModel>()
         setupClient()
-        apolloClient()?.query(
+        getApolloClient().query(
             CountriesQuery.builder()
                 .build()
         )?.enqueue(object: ApolloCall.Callback<CountriesQuery.Data>() {
@@ -42,10 +52,14 @@ class CountryRepository {
         return data
     }
 
+    /**
+     * Gets country detail.
+     * @param code country code.
+     */
     fun getCountryDetail(code: String?): MutableLiveData<CountryDetailRepoModel> {
         val data = MutableLiveData<CountryDetailRepoModel>()
-        setupClient()
-        apolloClient()?.query(
+
+        apolloClient?.query(
             CountryDetailQuery.builder().code(code)
                 .build()
         )?.enqueue(object: ApolloCall.Callback<CountryDetailQuery.Data>() {
@@ -64,10 +78,13 @@ class CountryRepository {
         return data
     }
 
-    private fun setupClient() {
+    /**
+     * Setups apollo client
+     */
+    private fun setupClient(): ApolloClient {
         val okHttpClient = OkHttpClient.Builder().build()
 
-        apolloClient = ApolloClient.builder()
+        return ApolloClient.builder()
             .serverUrl(BASE_URL)
             .okHttpClient(okHttpClient)
             .build()

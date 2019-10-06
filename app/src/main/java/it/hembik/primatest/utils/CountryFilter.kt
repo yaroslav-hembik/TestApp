@@ -29,6 +29,10 @@ class CountryFilter(private val adapter: CountriesAdapter, private val countries
         }
     }
 
+    /**
+     * Filters countries.
+     * @param sequenceString searched string.
+     */
     private fun filterCountries(sequenceString: String) {
         val filteredList = CountriesQuery.Data(ArrayList<CountriesQuery.Country>())
 
@@ -42,6 +46,12 @@ class CountryFilter(private val adapter: CountriesAdapter, private val countries
         }
     }
 
+    /**
+     * Checks for continent match.
+     * @param continent current continent.
+     * @param sequence searched sequence.
+     * @return true if match, false otherwise.
+     */
     private fun continentMatch(continent: String?, sequence: String?): Boolean {
         continent?.let {
             sequence?.let {
@@ -51,6 +61,12 @@ class CountryFilter(private val adapter: CountriesAdapter, private val countries
         return false
     }
 
+    /**
+     * Checks for language match.
+     * @param language current language.
+     * @param sequence searched sequence.
+     * @return true if match, false otherwise.
+     */
     private fun languageMatch(languageList: List<CountriesQuery.Language>, sequence: String): Boolean {
         for (language in languageList) {
             language.name()?.let { languageName ->
@@ -62,6 +78,12 @@ class CountryFilter(private val adapter: CountriesAdapter, private val countries
         return false
     }
 
+    /**
+     * Checks for string containing sequence.
+     * @param first first string.
+     * @param second second string.
+     * @return true if first contains second, false otherwise.
+     */
     private fun stringMatch(first: String, second: String): Boolean {
         return first.toLowerCase(Locale.getDefault()).contains(second.toLowerCase(Locale.getDefault()))
 

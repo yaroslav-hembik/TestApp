@@ -8,8 +8,6 @@ import it.hembik.primatest.CountriesQuery
 import it.hembik.primatest.R
 
 class MainActivity : AppCompatActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Hides keyboard.
+     */
     fun hideSoftKeyboard(activity: Activity) {
         val inputMethodManager = activity.getSystemService(
             Activity.INPUT_METHOD_SERVICE
