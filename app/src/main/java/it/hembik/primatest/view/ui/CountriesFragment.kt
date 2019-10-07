@@ -59,7 +59,7 @@ class CountriesFragment: Fragment() {
         binding.countriesList.adapter = countriesAdapter
         swipeToRefresh = binding.swipeToRefresh
         swipeToRefresh.setOnRefreshListener {
-            viewModel.refreshUsers()
+            viewModel.refreshCountries()
         }
 
         searchView = binding.searchField

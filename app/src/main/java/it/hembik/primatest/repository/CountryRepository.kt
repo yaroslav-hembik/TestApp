@@ -32,7 +32,6 @@ class CountryRepository {
      */
     fun getCountries(): MutableLiveData<CountriesRepoModel> {
         val data = MutableLiveData<CountriesRepoModel>()
-        setupClient()
         getApolloClient().query(
             CountriesQuery.builder()
                 .build()
@@ -58,8 +57,7 @@ class CountryRepository {
      */
     fun getCountryDetail(code: String?): MutableLiveData<CountryDetailRepoModel> {
         val data = MutableLiveData<CountryDetailRepoModel>()
-
-        apolloClient?.query(
+        getApolloClient().query(
             CountryDetailQuery.builder().code(code)
                 .build()
         )?.enqueue(object: ApolloCall.Callback<CountryDetailQuery.Data>() {

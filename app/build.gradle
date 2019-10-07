@@ -44,7 +44,6 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
 
     testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "androidx.test:runner:$runner_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
-    androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
+    testImplementation "androidx.arch.core:core-testing:$core_testing_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
 }

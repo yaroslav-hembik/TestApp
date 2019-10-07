@@ -15,14 +15,14 @@ class CountriesViewModel(application: Application): AndroidViewModel(application
     }
 
     init {
-        refreshUsers()
+        refreshCountries()
     }
 
     fun getCountriesObservable(): LiveData<CountriesRepoModel> {
         return countriesObservable
     }
 
-    fun refreshUsers() {
+    fun refreshCountries() {
         reloadTrigger.value = true
     }
 }

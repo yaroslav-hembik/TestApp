@@ -6,7 +6,7 @@ import it.hembik.primatest.view.adapter.CountriesAdapter
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CountryFilter(private val adapter: CountriesAdapter, private val countries: CountriesQuery.Data?, private var filteredCountries: CountriesQuery.Data?): Filter() {
+open class CountryFilter(private val adapter: CountriesAdapter, private val countries: CountriesQuery.Data?, private var filteredCountries: CountriesQuery.Data?): Filter() {
     override fun performFiltering(sequence: CharSequence): FilterResults {
         val sequenceString = sequence.toString()
         if (sequenceString.isEmpty()) {
@@ -33,7 +33,7 @@ class CountryFilter(private val adapter: CountriesAdapter, private val countries
      * Filters countries.
      * @param sequenceString searched string.
      */
-    private fun filterCountries(sequenceString: String) {
+     fun filterCountries(sequenceString: String) {
         val filteredList = CountriesQuery.Data(ArrayList<CountriesQuery.Country>())
 
         countries?.countries()?.let { countries ->
@@ -52,7 +52,7 @@ class CountryFilter(private val adapter: CountriesAdapter, private val countries
      * @param sequence searched sequence.
      * @return true if match, false otherwise.
      */
-    private fun continentMatch(continent: String?, sequence: String?): Boolean {
+    fun continentMatch(continent: String?, sequence: String?): Boolean {
         continent?.let {
             sequence?.let {
                 return stringMatch(continent, sequence)
@@ -67,7 +67,7 @@ class CountryFilter(private val adapter: CountriesAdapter, private val countries
      * @param sequence searched sequence.
      * @return true if match, false otherwise.
      */
-    private fun languageMatch(languageList: List<CountriesQuery.Language>, sequence: String): Boolean {
+    fun languageMatch(languageList: List<CountriesQuery.Language>, sequence: String): Boolean {
         for (language in languageList) {
             language.name()?.let { languageName ->
                 sequence.let {
@@ -84,7 +84,7 @@ class CountryFilter(private val adapter: CountriesAdapter, private val countries
      * @param second second string.
      * @return true if first contains second, false otherwise.
      */
-    private fun stringMatch(first: String, second: String): Boolean {
+    fun stringMatch(first: String, second: String): Boolean {
         return first.toLowerCase(Locale.getDefault()).contains(second.toLowerCase(Locale.getDefault()))
 
     }
